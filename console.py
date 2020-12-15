@@ -115,7 +115,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, str):
         """ Create an object of any class"""
-        """ Usage: Command syntax: create 
+        """ Usage: Command syntax: create
         <Class name> <param 1> <param 2> <param 3>... """
         """ Param Usage: <key name>=<value> """
         args = str.split(" ")
@@ -333,9 +333,3 @@ class HBNBCommand(cmd.Cmd):
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
-
-    def do_create(self, arg):
-       """command syntax :
-        create <Class name> <param 1> <param 2> <param 3>
-        Param syntax: <key name>=<value>
-        """
