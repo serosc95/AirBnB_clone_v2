@@ -52,3 +52,4 @@ class TestConsole(unittest.TestCase):
         result = style.check_files([f1])
         self.assertEqual(result.total_errors, 0, "fix pep8")
         # self.assertEqual(True,True)
+        
