@@ -40,16 +40,12 @@ class DBStorasge:
             classes = [Amenity, City, Place, Review, State, User]
             for clselement in classes:
                 cls_query = self.__session.query(clselement).all()
-                for dic_query in cls_query:
-                    key = "{}.{}".format(dic_query.__class__.__name__,
-                                         dic_query.id)
-                    clsdict[key] = dic_query
-
         else:
-            dbase_query = self.__session.query(cls).all()
-            for obj in dbase_query:
-                clsdict["{}.{}".format(obj.__class__.__name__, obj.id)] = obj
-            return clsdict
+            cls_query = self.__session.query(cls).all()
+        for obj in cls_query:
+            key = "{}.{}".format(type(obj).__name__, obj.id)
+            clsdict[key] = dic_query
+        return clsdict
 
         def new(self, obj):
             """add the object to the current database session"""
@@ -66,7 +62,8 @@ class DBStorasge:
 
         def reload(self):
              """Reload objects from the database"""
-             Base.metadata.create_all(self.__engine)
-             session_start = sessionmaker(bind=self.__engine, expire_on_commit=False)
-             Session = scoped_session(session_factory)
-             self.__session = Session()
+            Base.metadata.create_all(self.__engine)
+            session_start = sessionmaker(bind=self.__engine,
+                                         expire_on_commit=False)
+            Session = scoped_session(session_factory)
+            self.__session = Session()
