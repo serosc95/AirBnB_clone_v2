@@ -3,18 +3,15 @@
 import os
 import models
 from models.base_model import BaseModel, Base
-from datetime import datetime
-from sqlalchemy import Column, Integer, String, DateTime
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship, backref
+from sqlalchemy import Column, Integer, String, ForeignKey
+from models.city import City
+from sqlalchemy.orm import relationship
 
 
 class State(BaseModel, Base):
     """ State class """
     __tablename__ = "states"
     name = Column(String(128), nullable=False)
-    cities = relationship("City",
-                          backref=backref("State", cascade="all, delete"))
 
     if os.getenv("HBNB_TYPE_STORAGE") != "db":
         @property
@@ -26,3 +23,6 @@ class State(BaseModel, Base):
                 if obj.state_id == self.id:
                     city_list.append(obj)
             return city_list
+    else:
+        cities = relationship("City", cascade="all, delete",
+                              backref="state")

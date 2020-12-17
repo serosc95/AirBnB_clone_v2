@@ -1,10 +1,8 @@
 #!/usr/bin/python3
 """ Data Base Engine module """
 import os
-from sqlalchemy import (create_engine)
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.orm import scoped_session
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, scoped_session
 from models.base_model import BaseModel, Base
 from models.amenity import Amenity
 from models.user import User
@@ -27,8 +25,8 @@ class DBStorage:
         host = os.getenv('HBNB_MYSQL_HOST')
         db = os.getenv('HBNB_MYSQL_DB')
 
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
-                                      .format(user, pwd, host, db),
+        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
+                                      format(user, pwd, host, db),
                                       pool_pre_ping=True)
         if env == "test":
             Base.metadata.drop_all(bind=self.__engine)
@@ -67,3 +65,7 @@ class DBStorage:
                                         expire_on_commit=False)
         Session = scoped_session(session_factory)
         self.__session = Session()
+
+    def close(self):
+        """ method used for sesssion closing """
+        self.__session.close()

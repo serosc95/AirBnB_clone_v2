@@ -9,5 +9,4 @@ if database == 'db':
     storage = DBStorage()
 else:
     storage = FileStorage()
-
 storage.reload()
