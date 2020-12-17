@@ -50,7 +50,7 @@ class DBStorasge:
         def new(self, obj):
             """add the object to the current database session"""
             self.__session.add(obj)
-            
+
         def save(self):
             """ commit all changes of the current database session """
             self.__session.commit()
@@ -61,7 +61,7 @@ class DBStorasge:
                 self.__session.delete(obj)
 
         def reload(self):
-             """Reload objects from the database"""
+            """Reload objects from the database"""
             Base.metadata.create_all(self.__engine)
             session_start = sessionmaker(bind=self.__engine,
                                          expire_on_commit=False)
