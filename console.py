@@ -2,7 +2,7 @@
 """ Console Module """
 import cmd
 import sys
-from models.base_model import BaseModel, Base
+from models.base_model import BaseModel
 from models.__init__ import storage
 from models.user import User
 from models.place import Place
@@ -114,8 +114,7 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, str):
-        exit
-
+        """ Create an object of any class """
         args = str.split(" ")
         if not args[0]:
             print("** class name missing **")
@@ -137,7 +136,6 @@ class HBNBCommand(cmd.Cmd):
             setattr(new_instance, key, value)
         storage.save()
         print(new_instance.id)
-        storage.save()
 
     def help_create(self):
         """ Help information for the create method """
