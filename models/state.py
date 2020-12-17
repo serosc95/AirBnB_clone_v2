@@ -13,13 +13,12 @@ class State(BaseModel, Base):
     __tablename__ = "states"
     name = Column(String(128), nullable=False)
     cities = relationship("City",
-                          backref=backref("State",
-                          cascade="all, delete"))
+                          backref=backref("State", cascade="all, delete"))
 
     if os.getenv("HBNB_TYPE_STORAGE" != "db"):
         @property
         def cities(self):
-        """List of City instances with state_id equals"""	        
+            """List of City instances with state_id equals"""
         city_list = []
         all_cities = models.storage.all(City)
         for obj in all_cities.values():
