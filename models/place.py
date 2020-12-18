@@ -9,16 +9,16 @@ import os
 import models
 
 place_amenity = Table("place_amenity", Base.metadata,
-                          Column("place_id",
-                                 String(60),
-                                 ForeignKey('places.id'),
-                                 PrimaryKey=True,
-                                 nullable=False),
-                          Column("amenity_id",
-                                 String(60),
-                                 ForeignKey('amenities.id'),
-                                 PrimaryKey=True,
-                                 nullable=False))
+                      Column("place_id",
+                             String(60),
+                             ForeignKey('places.id'),
+                             PrimaryKey=True,
+                             nullable=False),
+                      Column("amenity_id",
+                             String(60),
+                             ForeignKey('amenities.id'),
+                             PrimaryKey=True,
+                             nullable=False))
 
 
 class Place(BaseModel, Base):
@@ -40,8 +40,8 @@ class Place(BaseModel, Base):
         reviews = relationship("Review", backref="place",
                                cascade="all, delete")
         amenities = relationship('Amenity',
-                                       secondary=place_amenity,
-                                       viewonly=False)
+                                 secondary=place_amenity,
+                                 viewonly=False)
     else:
         @property
         def reviews(self):
@@ -60,3 +60,9 @@ class Place(BaseModel, Base):
                 if obj.place_id == self.id:
                     all_ameny.append(obj)
             return all_ameny
+
+        @amenities.setter
+        def amenities(self, obj):
+            """ set the reviews in FileStorage """
+            if isinstance(obj, Amenity):
+                self.amenity_ids.append(obj.id)
