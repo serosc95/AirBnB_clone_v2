@@ -12,12 +12,12 @@ place_amenity = Table("place_amenity", Base.metadata,
                       Column("place_id",
                              String(60),
                              ForeignKey('places.id'),
-                             PrimaryKey=True,
+                             primary_key=True,
                              nullable=False),
                       Column("amenity_id",
                              String(60),
                              ForeignKey('amenities.id'),
-                             PrimaryKey=True,
+                             primary_key=True,
                              nullable=False))
 
 
@@ -54,7 +54,7 @@ class Place(BaseModel, Base):
 
         @property
         def amenities(self):
-            """ get the reviews in FileStorage """
+            """ get the amenity in FileStorage """
             all_ameny = []
             for obj in models.storage.all(Amenity).values():
                 if obj.place_id == self.id:
@@ -63,6 +63,6 @@ class Place(BaseModel, Base):
 
         @amenities.setter
         def amenities(self, obj):
-            """ set the reviews in FileStorage """
+            """ set the amenity in FileStorage """
             if isinstance(obj, Amenity):
                 self.amenity_ids.append(obj.id)
