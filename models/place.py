@@ -20,3 +20,15 @@ class Place(BaseModel, Base):
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
     amenity_ids = []
+
+    place_amenity = Table("place_amenity", Base.metadata,
+                          Column("place_id",
+                                 String(60),
+                                 ForeignKey('places.id'),
+                                 PrimaryKey=True,
+                                 nullable=False),
+                          Column("amenity_id",
+                                 String(60),
+                                 ForeignKey('amenities.id'),
+                                 PrimaryKey=True,
+                                 nullable=False))
