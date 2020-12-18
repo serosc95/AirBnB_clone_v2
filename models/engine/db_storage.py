@@ -34,15 +34,18 @@ class DBStorage:
     def all(self, cls=None):
         """ return the dictionary with all class objects """
         clsdict = {}
+        cls_query = []
         if cls is None:
-            classes = [State, City]
+            classes = ['State', 'City', 'User', 'Place', 'Review']
             for clselement in classes:
-                cls_query = self.__session.query(clselement).all()
+                objs = self.__session.query(eval(clselement)).all()
+                cls_query.extend(objs)
         else:
-            cls_query = self.__session.query(cls).all()
+            objs = self.__session.query(eval(cls)).all()
+            cls_query.extend(objs)
         for obj in cls_query:
             key = "{}.{}".format(type(obj).__name__, obj.id)
-            clsdict[key] = dic_query
+            clsdict[key] = obj
         return clsdict
 
     def new(self, obj):
