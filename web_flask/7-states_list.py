@@ -2,6 +2,7 @@
 """starts a Flask web application and list states"""
 from flask import Flask, render_template
 from models import storage
+from models.state import State
 
 app = Flask(__name__)
 
@@ -13,8 +14,8 @@ def tearDown(error):
 
 @app.route("/states_list", strict_slashes=False)
 def states_list():
-    return render_template("7-states_list.html",
-                           state_list=storage.all("State"))
+    all_states = list(storage.all(State).values())
+    return render_template('7-states_list.html', all_states=all_states)
 
 if __name__ == "__main__":
     storage.close()
